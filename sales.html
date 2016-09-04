@@ -4,7 +4,7 @@ xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
 xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
-<title> People Pharmacy Login Page </title>
+<title> People Pharamcy Login Page </title>
 </head>
 
 <body style='margin:0'>
@@ -36,7 +36,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <td valign="top">
 <p>&nbsp;Item 1</p>
 <p>Price: $5.50</p>
-<p><button type="button" onclick="loadDoc()">Change Content</button> <br /> <br /><input type="submit" name="ritem1" value="Remove Item"></p>
+<p><button type="button" value="aItem1" onclick="addItem(this.value)">Add Item</button> <br /> <br /><button type="button" value="rItem1" onclick="removeItem(this.value)">Remove</button> </p>
 </td>
 <td valign="top">
 <p>&nbsp;Item 2</p>
@@ -62,16 +62,28 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </table>
 
 <script>
-function loadDoc() {
+function addItem(item) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       document.getElementById("displayCart").innerHTML = xhttp.responseText;
     }
   };
-  xhttp.open("GET", "test.txt", true);
+  xhttp.open("GET", "sales.php?item="+item, true);
   xhttp.send();
 }
+
+function removeItem(item) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("displayCart").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "sales.php?item="+item, true);
+  xhttp.send();
+}
+
 </script>
 
 
