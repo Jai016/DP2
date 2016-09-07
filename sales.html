@@ -18,10 +18,12 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <table style="height: 197px;" width="508">
 <tbody>
 <tr>
-<td align="middle" valign="top">Items <p id="displayCart"> test </p></td>
-
-<td align="middle" valign="top">price</td>
+<td align="left" valign="top">Items <p id="displayCart">  </p></td>
 </tr>
+<td>
+<button type="button" value="b:buy" onclick="action(this.value)">Pay</button>
+<td align="right"> <button type="button" align="right" value="b:inventory" onclick="action(this.value)">Item Inventory</button> </td>
+</td>
 </tbody>
 </table>
 <p>&nbsp;</p>
@@ -36,22 +38,22 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <td valign="top">
 <p>&nbsp;Item 1</p>
 <p>Price: $5.50</p>
-<p><button type="button" value="aItem1" onclick="addItem(this.value)">Add Item</button> <br /> <br /><button type="button" value="rItem1" onclick="removeItem(this.value)">Remove</button> </p>
+<p><button type="button" value="a:Drinks" onclick="action(this.value)">Add Item</button> <br /> <br /><button type="button" value="r:Drinks" onclick="action(this.value)">Remove</button> </p>
 </td>
 <td valign="top">
 <p>&nbsp;Item 2</p>
 <p>Price: $4.00</p>
-<p> <input type="submit" name="aitem2" value="Add Item"> <br /> <br /><input type="submit" name="ritem2" value="Remove Item"></p>
+<p><button type="button" value="a:Pills" onclick="action(this.value)">Add Item</button>  <br /> <br /><button type="button" value="r:Pills" onclick="action(this.value)">Remove</button> </p>
 </td>
 <td valign="top">
 <p>&nbsp;Item 3</p>
 <p>Price: $10.00</p>
-<p> <input type="submit" name="aitem3" value="Add Item"> <br /> <br /><input type="submit" name="ritem3" value="Remove Item"></p>
+<p><button type="button" value="a:Food" onclick="action(this.value)">Add Item</button>  <br /> <br /><button type="button" value="r:Food" onclick="action(this.value)">Remove</button> </p>
 </td>
 <td valign="top">
 <p>&nbsp;Item 4</p>
 <p>Price: $2.75</p>
-<p> <input type="submit" name="aitem4" value="Add Item"> <br /> <br /><input type="submit" name="ritem4" value="Remove Item"></p>
+<p><button type="button" value="a:condoms" onclick="action(this.value)">Add Item</button>  <br /> <br /><button type="button" value="r:condoms" onclick="action(this.value)">Remove</button> </p>
 </td>
 </tr>
 </tbody>
@@ -62,27 +64,21 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </table>
 
 <script>
-function addItem(item) {
+function action(item) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       document.getElementById("displayCart").innerHTML = xhttp.responseText;
+      var response= xhttp.responseText;
+      if (response == "inventory.html") {
+      	window.location.href = "http://localhost/PeopleHP/pages/inventory.html";
+      }
     }
   };
   xhttp.open("GET", "sales.php?item="+item, true);
   xhttp.send();
 }
 
-function removeItem(item) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
-      document.getElementById("displayCart").innerHTML = xhttp.responseText;
-    }
-  };
-  xhttp.open("GET", "sales.php?item="+item, true);
-  xhttp.send();
-}
 
 </script>
 

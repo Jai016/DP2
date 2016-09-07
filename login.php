@@ -5,7 +5,7 @@ if (!empty($_GET['userName'] and (!empty($_GET['password'])))){
 
 	$userCheck = findUser($username, $password);
 	if ( $userCheck == "True"){
-	echo "asdf1234";
+	echo "true";
 
 	}
 }else{

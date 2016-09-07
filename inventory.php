@@ -1,28 +1,42 @@
 <?php
 Session_start();
-$item=$_GET["item"];
-$exp = explode(":", $item);
-	if (!empty($_SESSION['Cart'])){
-		if($exp[0] == "r"){
-			RemoveItem($exp[1]);
-			echo printCart();
-		}
+
+$action = $_GET['action'];
+$itemdb = Itemsdb();
+if ($action == 'display'){
+	echo printCart($itemdb);
+}else{
+	//echo $action;
+	//addItemToDB($action);
+	echo printCart($itemdb);
 }
-	
-if ($exp[0] == "a"){
-	AddItem($exp[1]);
-	echo printCart();
-		}elseif($item == "b:buy"){
-			if (empty($_SESSION['Cart'])){
-				echo "cart is empty";
-				}else{
-			saveRecipt();
-		}
-	}elseif($item == "b:inventory"){
-		echo "inventory.html";
+
+
+function Itemsdb(){
+$csv = array_map('str_getcsv', file('items_db.csv'));
+return $csv;
+}
+
+function printCart($db){
+	$cart = $db;
+	echo "<Table border = '1'><tr><th>Item Name</th><th>Price</th><th>Stock</th></tr>";
+		foreach($cart as $row => $value) {
+	echo "<tr>";
+    echo "<td>" .$value[0]. "</td><td>" . $value[1] . "</td><td>". $value[2]. "</td>";
+    echo "</tr>";
 	}
+	echo "</Table>";
+}
 
-
+//function addItemToDB($action){
+//	$itemdb = Itemsdb();
+//	$newItems= explode(",", $action);
+//		$cart = array($newItems[0] =>array("quantity" => 1, 'amount' => $itemData[2]));
+//		$_SESSION['Cart'] = $cart;
+	//foreach($itemdb as $row => $value) {
+    //   echo $row. $value[0].$value[1];
+	//}
+//}
 
 function saveRecipt(){
 	$cart = $_SESSION['Cart'];
@@ -36,17 +50,6 @@ function saveRecipt(){
 	fclose($myfile);
 	$_SESSION['Cart'] = "";
 	session_unset(); 
-
-}
-
-
-function printCart(){
-	$total = 0;
-	$cart = $_SESSION['Cart'];
-foreach($cart as $row => $value) {
-       echo "Item: " .$row. " Quantity " . $value['quantity'] . " Total cost $". $value['amount']. "<br>";
-	}
-	echo "Total Price: ".total();
 }
 
 function total(){
@@ -135,10 +138,7 @@ function FindItemPrice_db($item){
 return $return;
 }
 
-	function Itemsdb(){
-	$csv = array_map('str_getcsv', file('items_db.csv'));
-	return $csv;
-	}
+
 
 
 ?>
