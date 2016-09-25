@@ -15,7 +15,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <tbody>
 <tr>
 <td>
-<button type="button" value="goBack" onclick="action(this.value)">Go Back</button>
+<button type="button" value="goBack" onclick="back()">Go Back</button>
 <button type="button" onclick="addItem()">Add New Item</button>
 <p id = "test"></p>
 </td>
@@ -29,10 +29,15 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </body>
 
 <script>
+
+function back (){
+  window.location.href = "http://localhost/PeopleHP/pages/sales.html";
+}
+
 function addItem() {
   var item = itemInformation();
   if (item == "error"){
-     document.getElementById("test").innerHTML = 'missing field';
+    window.alert('missing fields');
   }else{
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -50,28 +55,69 @@ function action(item) {
   	xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       document.getElementById("test").innerHTML = xhttp.responseText;
-
-    //  if (xhttp.responseText == "true"){
-    //  	window.location.href = "http://localhost/PeopleHP/pages/sales.html";
-    //  }
     }
   };
   xhttp.open("GET", "inventory.php?action="+item, true);
   xhttp.send();
 }
 
+function editItem(item, old) {
+    var newdata = window.prompt();
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("test").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "inventory.php?action="+item+ "&newdata="+newdata+"&old="+old, true);
+  xhttp.send();
+}
+
+
+function deleterow(item, old) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("test").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "inventory.php?action="+item+"&old="+old, true);
+  xhttp.send();
+}
+
+
 
 function itemInformation(){
   var itemName = window.prompt("Item Name");
-  var itemCost = window.prompt("Item Cost");
+  var itemCost = window.prompt("Item Price");
   var itemStock = window.prompt("Items in Stock");
   var itemInfo = itemName+","+itemCost+","+itemStock;
   if (itemName.length == 0 || itemStock == 0 || itemCost == 0){
     window.alert('field was missing nothing added to databse!!');
+    die();
     itemInfo = 'error';
+  }
+  val = parseFloat(itemCost);
+  if(isNaN(val)){
+  alert("Item Price was not valid!");
+  die();
+  }
+    val = parseFloat(itemStock);
+  if(isNaN(val)){
+  alert("Item Stock amount was not valid!");
+  die();
+  }
+  if(val <= 0 || val > 1000000){
+  alert("item price must be between 0 and 1000000");
+  die();
+  }
+  if(val <= 0 || val > 100000){
+  alert("item stock amount must be between 0 and 100000");
+  die();
   }
   return itemInfo;
 }
+
 
 </script>
 

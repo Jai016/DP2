@@ -7,7 +7,7 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <title> People Pharamcy Login Page </title>
 </head>
 
-<body style='margin:0'>
+<body style='margin:0' onload="pageLoad('load')">
 
 <h1 style="color: #5e9ca0; text-align: center;">People Health Pharmacy&nbsp;</h1>
 <h2 style="color: #2e6c80; text-align: center;">Sales Page&nbsp;</h2>
@@ -22,7 +22,11 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </tr>
 <td>
 <button type="button" value="b:buy" onclick="action(this.value)">Pay</button>
-<td align="right"> <button type="button" align="right" value="b:inventory" onclick="action(this.value)">Item Inventory</button> </td>
+<td align="right"> 
+<button type="button" align="right" value="b:inventory" onclick="action(this.value)">Item Inventory</button>
+<p><button type="button" align="right" onclick="reports()">Reports</button></p> 
+<p><button type="button" align="right" onclick="editUser()">System Users</button></p>
+</td>
 </td>
 </tbody>
 </table>
@@ -35,25 +39,8 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <table style="height: 67px;" width="390">
 <tbody>
 <tr>
-<td valign="top">
-<p>&nbsp;Item 1</p>
-<p>Price: $5.50</p>
-<p><button type="button" value="a:Drinks" onclick="action(this.value)">Add Item</button> <br /> <br /><button type="button" value="r:Drinks" onclick="action(this.value)">Remove</button> </p>
-</td>
-<td valign="top">
-<p>&nbsp;Item 2</p>
-<p>Price: $4.00</p>
-<p><button type="button" value="a:Pills" onclick="action(this.value)">Add Item</button>  <br /> <br /><button type="button" value="r:Pills" onclick="action(this.value)">Remove</button> </p>
-</td>
-<td valign="top">
-<p>&nbsp;Item 3</p>
-<p>Price: $10.00</p>
-<p><button type="button" value="a:Food" onclick="action(this.value)">Add Item</button>  <br /> <br /><button type="button" value="r:Food" onclick="action(this.value)">Remove</button> </p>
-</td>
-<td valign="top">
-<p>&nbsp;Item 4</p>
-<p>Price: $2.75</p>
-<p><button type="button" value="a:condoms" onclick="action(this.value)">Add Item</button>  <br /> <br /><button type="button" value="r:condoms" onclick="action(this.value)">Remove</button> </p>
+<td valign="top" id="itemData">
+
 </td>
 </tr>
 </tbody>
@@ -79,10 +66,26 @@ function action(item) {
   xhttp.send();
 }
 
+function editUser(){
+    window.location.href = "http://localhost/PeopleHP/pages/userEdit.html";
+}
+
+function reports(){
+    window.location.href = "http://localhost/PeopleHP/pages/reports.html";
+}
+
+function pageLoad(item) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("itemData").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "sales.php?item="+item, true);
+  xhttp.send();
+}
 
 </script>
-
-
 </body>
 </html>
 

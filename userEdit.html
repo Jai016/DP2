@@ -1,0 +1,77 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<title> People Pharamcy Login Page </title>
+</head>
+
+<body style='margin:0' onload="action('display')">
+
+<h1 style="color: #5e9ca0; text-align: center;">People Health Pharmacy&nbsp;</h1>
+<h2 style="color: #2e6c80; text-align: center;">User Edit&nbsp;</h2>
+<table bgcolor= "lightblue"; style="height: 139px;" width="317" align="center">
+<tbody>
+<tr>
+<td>
+<button type="button" value="goBack" onclick="back()">Go Back</button>
+<button type="button" onclick="addUser()">Add User</button>
+<p id = "test"></p>
+</td>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><strong>&nbsp;</strong></p>
+
+</body>
+
+<script>
+
+function back (){
+  window.location.href = "http://localhost/PeopleHP/pages/sales.html";
+}
+
+function addUser() {
+  var item = itemInformation();
+  if (item == "error"){
+    window.alert('missing fields');
+  }else{
+    item = "a:"+item;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("test").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "userEdit.php?item="+item, true);
+  xhttp.send();
+}
+}
+
+function action(item) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("test").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "userEdit.php?item="+item, true);
+  xhttp.send();
+}
+
+function itemInformation(){
+  var userName = window.prompt("User Name");
+  var userPassword = window.prompt("Password");
+  var itemInfo = userName+","+userPassword;
+  if (userName.length == 0 || userPassword == 0) {
+    itemInfo = 'error';
+  }
+  return itemInfo;
+}
+
+</script>
+
+</html>

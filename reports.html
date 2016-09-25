@@ -4,22 +4,23 @@ xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
 xmlns="http://www.w3.org/TR/REC-html40">
 
 <head>
-<title> People Pharamcy Login Page </title>
+<title> People Pharamcy Reports</title>
 </head>
 
-<body style='margin:0'>
+<body style='margin:0' onload="action('display')">
 
 <h1 style="color: #5e9ca0; text-align: center;">People Health Pharmacy&nbsp;</h1>
-<h2 style="color: #2e6c80; text-align: center;">Login Page&nbsp;</h2>
+<h2 style="color: #2e6c80; text-align: center;">Monthly Reports&nbsp;</h2>
 <table bgcolor= "lightblue"; style="height: 139px;" width="317" align="center">
 <tbody>
 <tr>
 <td>
-<p>&nbsp; &nbsp; &nbsp; User Name: <input id = "userName"type="text" name="logginName" /></p>
-<p>&nbsp;User Password:<input type="text" id="password" name="logginPassword" /></p>
-<button type="button" value="loggin()" onclick="action()">Enter</button>
-<h3 align ="center" id = "test"></h3>
+<button type="button" value="goBack" onclick="back()">Go Back</button>
+<button type="button" align="right" value="b:inventory" onclick="viewSales()">Today Sales</button>
+<button type="button" value="export" onclick="action(this.value)">Export Report</button>
+<p id = "test"></p>
 </td>
+
 </td>
 </tr>
 </tbody>
@@ -30,22 +31,25 @@ xmlns="http://www.w3.org/TR/REC-html40">
 </body>
 
 <script>
+
+function back (){
+  window.location.href = "http://localhost/PeopleHP/pages/sales.html";
+}
+
 function action(item) {
-	var userName = document.getElementById("userName").value;
-	var password = document.getElementById("password").value;
   	var xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       document.getElementById("test").innerHTML = xhttp.responseText;
-      if (xhttp.responseText == "true"){
-      	window.location.href = "http://localhost/PeopleHP/pages/sales.html";
-      }
     }
   };
-  xhttp.open("GET", "login.php?userName="+userName+'&password='+password, true);
+  xhttp.open("GET", "reports.php?action="+item, true);
   xhttp.send();
 }
 
+function viewSales(){
+    window.location.href = "http://localhost/PeopleHP/pages/salesRecords.html";
+}
 
 </script>
 
