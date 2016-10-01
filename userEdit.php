@@ -1,4 +1,4 @@
-<?php
+<?php /**/
 Session_start();
 $item=$_GET["item"];
 $conn = connectItemDB();
