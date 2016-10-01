@@ -1,4 +1,4 @@
-<?php
+<?php /**/
 Session_start();
 $item=$_GET["item"];
 $exp = explode(":", $item);
