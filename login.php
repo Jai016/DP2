@@ -1,4 +1,4 @@
-<?php
+<?php /**/
 if (!empty($_GET['userName'] and (!empty($_GET['password'])))){
 	$username = $_GET['userName'];
 	$password = $_GET['password'];	
