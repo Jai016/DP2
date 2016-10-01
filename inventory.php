@@ -1,4 +1,4 @@
-<?php
+<?php /**/
 Session_start();
 connect();
 $action = $_GET['action'];
